@@ -1,11 +1,13 @@
 import { TauClient } from './build/main/index';
 
+// Setup and connect
 const port = 7400;
 const uri = `ws://localhost:${port}/ws/twitch-events/`;
 const secretTauApiToken = 'MY_TOKEN';
 const tau = new TauClient(uri, secretTauApiToken);
 tau.connect();
 
+// Subscribe to events
 tau.follows.subscribe((event) => {
   console.log(`Thanks for following @${event.event_data.user_name}.`);
 });
@@ -24,14 +26,14 @@ tau.raids.subscribe((event) => {
   );
 });
 
-// how to unsubscribe a specific callback
+// Unsubscribe a specific callback
 const aCheerSubscription = tau.cheers.subscribe((event) => {
   console.log('received a cheer');
 });
 tau.cheers.unsubscribe(aCheerSubscription);
 
-// how to unsubscribe all callbacks of a specific event
+// Unsubscribe all callbacks of a specific event
 tau.cheers.unsubscribeAll();
 
-// how to end the connection
-setTimeout(() => tau.close(), 10000);
+// End the connection
+// tau.close();
