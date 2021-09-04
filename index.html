@@ -1,0 +1,21 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TauClient Example</title>
+    <script src="/browser-dist/bundle.js"></script>
+</head>
+
+<body>
+    <script>
+        const port = 7400;
+        const uri = `ws://localhost:${port}/ws/twitch-events/`;
+        const secretApiToken = 'MY_TOKEN';
+        const tau = new TauClient(uri, secretApiToken);
+        tau.connect();
+    </script>
+</body>
+
+</html>
