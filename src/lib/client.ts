@@ -46,7 +46,7 @@ export class TauClient {
     };
 
     this.ws.onmessage = (message) => {
-      console.log('message received', message);
+      console.log('message received');
       if (typeof message.data !== 'string') {
         console.warn(
           `websocket received unexpected message data. Expected string. Found ${typeof message.data}`
