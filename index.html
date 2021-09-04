@@ -12,9 +12,12 @@
     <script>
         const port = 7400;
         const uri = `ws://localhost:${port}/ws/twitch-events/`;
-        const secretApiToken = 'MY_TOKEN';
-        const tau = new TauClient(uri, secretApiToken);
+        const secretTauApiToken = 'MY_SECRET';
+        const tau = new TauClient(uri, secretTauApiToken);
         tau.connect();
+        tau.follows.subscribe((event) => {
+            console.log(`Thanks for following @${event.event_data.user_name}.`);
+        });
     </script>
 </body>
 
