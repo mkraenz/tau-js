@@ -83,3 +83,8 @@ export class TauClient {
     }
   }
 }
+
+// Necessary to make TauClient work in the browser.
+if (typeof window !== 'undefined') {
+  (window as any).TauClient = TauClient;
+}
