@@ -13,6 +13,8 @@ export class TauClient {
   private ws: WebSocket;
   private apiToken: string;
 
+  private debug = false;
+
   private readonly _follows = new EventHandler<FollowEvent>();
   private readonly _streamUpdates = new EventHandler<UpdateEvent>();
   // TODO point redemption. cannot test because one field cannot be set in the test
@@ -30,26 +32,27 @@ export class TauClient {
   public readonly subscribes: IEventHandler<SubscribeEvent> = this._subscribes;
   public readonly unknownEvents: IEventHandler<unknown> = this._unknownEvents;
 
-  constructor(url: string, tauApiToken: string) {
+  constructor(url: string, tauApiToken: string, debug = false) {
     this.ws = new WebSocket(url);
     this.apiToken = tauApiToken;
+    this.debug = debug;
   }
 
   public connect() {
     this.ws.onopen = () => {
-      console.log('connected');
+      console.log('TAU: connected');
       this.ws.send(JSON.stringify({ token: this.apiToken }));
     };
 
     this.ws.onclose = () => {
-      console.log('disconnected');
+      console.log('TAU: disconnected');
     };
 
     this.ws.onmessage = (message) => {
-      console.log('message received');
+      this.debug && console.log('TAU: message received');
       if (typeof message.data !== 'string') {
         console.warn(
-          `websocket received unexpected message data. Expected string. Found ${typeof message.data}`
+          `TAU: websocket received unexpected message data. Expected string. Found ${typeof message.data}`
         );
         return;
       }
@@ -63,6 +66,7 @@ export class TauClient {
   }
 
   private demultiplex(event: TauEvent) {
+    this.debug && console.log('TAU: received event type:', event.event_type);
     switch (event.event_type) {
       case 'follow':
         return this._follows._invoke(event);
