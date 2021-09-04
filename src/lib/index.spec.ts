@@ -6,7 +6,6 @@ it('connects to the api and receives connected event', async () => {
   const tau = new TauClient(url, 'my-api-token');
 
   const spy = jest.fn();
-  tau.on('connected', spy);
 
   tau.connect();
 

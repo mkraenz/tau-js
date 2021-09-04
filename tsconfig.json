@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "es2017",
+    "target": "es5",
     "outDir": "build/main",
     "rootDir": "src",
     "moduleResolution": "node",
@@ -10,26 +10,16 @@
     "inlineSourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-
     "noImplicitAny": true,
-
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-
-    "traceResolution": false,
-    "listEmittedFiles": false,
-    "listFiles": false,
-    "pretty": true,
 
     "lib": ["es2017", "DOM"],
     "types": ["jest"],
     "typeRoots": ["node_modules/@types", "src/types"]
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules/**"],
-  "compileOnSave": false
+  "exclude": ["node_modules/**"]
 }
