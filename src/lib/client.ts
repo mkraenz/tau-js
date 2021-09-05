@@ -1,4 +1,3 @@
-import WebSocket from 'isomorphic-ws';
 import { EventHandler, IEventHandler } from './event-handler';
 import {
   CheerEvent,
@@ -8,11 +7,7 @@ import {
   TauEvent,
   UpdateEvent,
 } from './events';
-
-type IWebSocket = Pick<
-  WebSocket,
-  'onclose' | 'onopen' | 'onmessage' | 'send' | 'close'
->;
+import { IWebSocket, WebSocketAdapter } from './websocket-adapter';
 
 export class TauClient {
   private ws?: IWebSocket; // TODO
@@ -20,8 +15,6 @@ export class TauClient {
   private apiToken: string;
 
   private debug = false;
-  // for testability. cannot mock out the websocket request
-  private _WebSocketFactory = (url: string): IWebSocket => new WebSocket(url);
 
   private readonly _follows = new EventHandler<FollowEvent>();
   private readonly _streamUpdates = new EventHandler<UpdateEvent>();
@@ -47,18 +40,17 @@ export class TauClient {
   }
 
   public connect() {
-    const ws = this._WebSocketFactory(this.url);
+    const ws = WebSocketAdapter.connect(this.url);
     this.ws = ws;
-    ws.onopen = () => {
+
+    ws.setOnOpen(() => {
       console.log('TAU: connected');
-      ws.send(JSON.stringify({ token: this.apiToken }));
-    };
+      ws.send({ token: this.apiToken });
+    });
 
-    ws.onclose = () => {
-      console.log('TAU: disconnected');
-    };
+    ws.setOnClose(() => console.log('TAU: disconnected'));
 
-    ws.onmessage = (message) => {
+    ws.setOnMessage((message) => {
       this.debug && console.log('TAU: message received');
       if (typeof message.data !== 'string') {
         console.warn(
@@ -68,7 +60,7 @@ export class TauClient {
       }
       const event: TauEvent = JSON.parse(message.data);
       this.demultiplex(event);
-    };
+    });
   }
 
   public close() {
