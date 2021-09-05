@@ -1,5 +1,5 @@
 {
-  "name": "tau-js",
+  "name": "@prosingularity/tau-js",
   "version": "0.0.0-development",
   "description": "Client-side library for TAU - Twitch Api Unifier. Browser and NodeJS support. Full Typescript support.",
   "main": "build/main/index.js",
