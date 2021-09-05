@@ -76,7 +76,10 @@
     "CHANGELOG.md",
     "LICENSE",
     "README.md"
-  ],
+  ],  
+  "publishConfig": {
+    "access": "public"
+  },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
