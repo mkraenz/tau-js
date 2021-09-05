@@ -9,10 +9,13 @@ module.exports = {
         assets: [
           {
             path: 'build/browser/index.js',
-            label: 'JS Browser distribution',
+            label: 'tau-js.browser.js',
             name: 'tau-js.browser.js',
           },
-          { path: 'dist/main/**/*', label: 'NodeJS JS+TS distribution' },
+          {
+            path: 'build/main/**/*.{js,ts}',
+            label: 'NodeJS JS+TS distribution',
+          },
         ],
       },
     ],
