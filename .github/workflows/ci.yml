@@ -1,0 +1,26 @@
+name: CI
+
+on: push
+
+jobs:
+  tests:
+    name: Build and Test
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: load cached node_modules
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: node_modules
+          key: node-${{ hashFiles('**/package-lock.json')}}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: tests
+        run: npm run test -- --ci
+      - name: Codecov
+        uses: codecov/codecov-action@v1.5.0
