@@ -10,7 +10,7 @@ import {
 import { IWebSocket, WebSocketAdapter } from './websocket-adapter';
 
 export class TauClient {
-  private ws?: IWebSocket; // TODO
+  private ws?: IWebSocket;
   private url: string;
   private apiToken: string;
 
