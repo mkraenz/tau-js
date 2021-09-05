@@ -1,6 +1,6 @@
 {
   "name": "tau-js",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Client-side library for TAU - Twitch Api Unifier. Browser and NodeJS support. Full Typescript support.",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -17,7 +17,6 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
@@ -30,9 +29,9 @@
     "doc:html": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --json build/docs/typedoc.json",
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
-    "version": "standard-version",
     "reset-hard": "git clean -dfx && git reset --hard && npm i",
-    "prepare-release": "run-s reset-hard test cov:check doc:html version doc:publish"
+    "prepare-release": "run-s reset-hard test doc:html doc:publish",
+    "semantic-release": "semantic-release"
   },
   "engines": {
     "node": ">=10"
@@ -61,6 +60,7 @@
     "open-cli": "^6.0.1",
     "prettier": "^2.1.1",
     "rimraf": "^3.0.2",
+    "semantic-release": "^17.4.7",
     "standard-version": "^9.0.0",
     "ts-jest": "^27.0.5",
     "ts-node": "^9.0.0",
