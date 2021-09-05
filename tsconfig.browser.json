@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig",
-  "compilerOptions": {
-    "target": "es5",
-    "outDir": "build/browser-tmp",
-    "module": "umd"
-  },
-  "exclude": ["node_modules/**"]
-}

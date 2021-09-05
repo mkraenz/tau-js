@@ -8,13 +8,13 @@ Make sure TAU (backend) is running.
 
 ```sh
 npm install
-npm run build-full
+npm run build
 ```
 
 Run the Browser example:
 
 ```sh
-# Adjust port and api token in index.html
+# Adjust port and api token for TAU in index.html
 python3 -m http.server 8080 &
 google-chrome http://localhost:8080
 
@@ -25,7 +25,7 @@ google-chrome http://localhost:8080
 Run the NodeJS example:
 
 ```sh
-# adjust port and api token in node.example.ts
+# adjust port and api token for TAU in node.example.ts
 # NOTE: requires ts-node installed
 ts-node node.example.ts
 ```
