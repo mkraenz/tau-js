@@ -9,11 +9,19 @@ import {
   UpdateEvent,
 } from './events';
 
+type IWebSocket = Pick<
+  WebSocket,
+  'onclose' | 'onopen' | 'onmessage' | 'send' | 'close'
+>;
+
 export class TauClient {
-  private ws: WebSocket;
+  private ws?: IWebSocket; // TODO
+  private url: string;
   private apiToken: string;
 
   private debug = false;
+  // for testability. cannot mock out the websocket request
+  private _WebSocketFactory = (url: string): IWebSocket => new WebSocket(url);
 
   private readonly _follows = new EventHandler<FollowEvent>();
   private readonly _streamUpdates = new EventHandler<UpdateEvent>();
@@ -33,22 +41,24 @@ export class TauClient {
   public readonly unknownEvents: IEventHandler<unknown> = this._unknownEvents;
 
   constructor(url: string, tauApiToken: string, debug = false) {
-    this.ws = new WebSocket(url);
+    this.url = url;
     this.apiToken = tauApiToken;
     this.debug = debug;
   }
 
   public connect() {
-    this.ws.onopen = () => {
+    const ws = this._WebSocketFactory(this.url);
+    this.ws = ws;
+    ws.onopen = () => {
       console.log('TAU: connected');
-      this.ws.send(JSON.stringify({ token: this.apiToken }));
+      ws.send(JSON.stringify({ token: this.apiToken }));
     };
 
-    this.ws.onclose = () => {
+    ws.onclose = () => {
       console.log('TAU: disconnected');
     };
 
-    this.ws.onmessage = (message) => {
+    ws.onmessage = (message) => {
       this.debug && console.log('TAU: message received');
       if (typeof message.data !== 'string') {
         console.warn(
@@ -62,7 +72,7 @@ export class TauClient {
   }
 
   public close() {
-    this.ws.close();
+    this.ws?.close();
   }
 
   private demultiplex(event: TauEvent) {
