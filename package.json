@@ -17,6 +17,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
@@ -70,7 +71,6 @@
   "files": [
     "build/main",
     "build/module",
-    "build/browser",
     "!**/*.spec.*",
     "!**/*.json",
     "CHANGELOG.md",
