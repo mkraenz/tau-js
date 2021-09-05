@@ -7,7 +7,11 @@ module.exports = {
       '@semantic-release/github',
       {
         assets: [
-          { path: 'build/browser/index.js', label: 'JS Browser distribution', 'tau-js.browser.js' },
+          {
+            path: 'build/browser/index.js',
+            label: 'JS Browser distribution',
+            name: 'tau-js.browser.js',
+          },
           { path: 'dist/main/**/*', label: 'NodeJS JS+TS distribution' },
         ],
       },
