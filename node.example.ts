@@ -1,4 +1,4 @@
-import { TauClient } from './build/main/index';
+import { TauClient } from './build/main';
 
 // Setup and connect
 const port = 7400;
